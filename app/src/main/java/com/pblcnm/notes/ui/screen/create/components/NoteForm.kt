@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pblcnm.notes.ui.screen.create.NoteEntity
 import com.pblcnm.notes.ui.screen.create.formattedDate
+import com.pblcnm.notes.ui.theme.neonGreenColor
+import com.pblcnm.notes.ui.theme.rickColor
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.Calendar
@@ -60,7 +62,7 @@ fun NoteForm(
             label = {
                 Text(
                     text = "НАЗВАНИЕ ЗАМЕТКИ",
-                    color = Color(0xFF00FF9D)
+                    color = rickColor
                 )
             },
             keyboardOptions = KeyboardOptions(
@@ -72,11 +74,11 @@ fun NoteForm(
             colors = OutlinedTextFieldDefaults.colors(
                 focusedTextColor = Color.White,
                 unfocusedTextColor = Color.White,
-                focusedBorderColor = Color(0xFF00FF9D),
+                focusedBorderColor = rickColor,
                 unfocusedBorderColor = Color(0xFF555555),
-                focusedLabelColor = Color(0xFF00FF9D),
+                focusedLabelColor = rickColor,
                 unfocusedLabelColor = Color(0xFF888888),
-                cursorColor = Color(0xFF00FF9D),
+                cursorColor = rickColor,
             )
         )
 
@@ -88,7 +90,7 @@ fun NoteForm(
             label = {
                 Text(
                     text = "ОПИСАНИЕ АЛЬТЕРНАТИВНОЙ РЕАЛЬНОСТИ",
-                    color = Color(0xFF00FF9D)
+                    color = rickColor
                 )
             },
             keyboardOptions = KeyboardOptions(
@@ -101,11 +103,11 @@ fun NoteForm(
             colors = OutlinedTextFieldDefaults.colors(
                 focusedTextColor = Color.White,
                 unfocusedTextColor = Color.White,
-                focusedBorderColor = Color(0xFF00FF9D),
+                focusedBorderColor = rickColor,
                 unfocusedBorderColor = Color(0xFF555555),
-                focusedLabelColor = Color(0xFF00FF9D),
+                focusedLabelColor = rickColor,
                 unfocusedLabelColor = Color(0xFF888888),
-                cursorColor = Color(0xFF00FF9D),
+                cursorColor = rickColor,
             )
         )
 
@@ -122,7 +124,7 @@ fun NoteForm(
                         }
                     },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = Color(0xFF00FF9D),
+                        checkedColor = neonGreenColor,
                         uncheckedColor = Color(0xFF555555)
                     )
                 )

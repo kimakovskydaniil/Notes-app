@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.pblcnm.notes.ui.theme.neonGreenColor
 
 @Composable
 fun PortalColorSelector(
@@ -47,7 +48,7 @@ fun PortalColorSelector(
     ) {
         Text(
             text = "ЦВЕТ ПОРТАЛА",
-            color = Color(0xFF00FF9D),
+            color = neonGreenColor,
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 4.dp)

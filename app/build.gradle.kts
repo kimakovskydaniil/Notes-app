@@ -5,6 +5,8 @@ plugins {
 
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -80,5 +82,11 @@ dependencies {
 
     // Для LocalDateTime (API < 26)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
+
+    // navigation - новая
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+    implementation(libs.kotlinx.serialization.core)
 
 }

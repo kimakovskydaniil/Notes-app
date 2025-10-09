@@ -20,7 +20,7 @@ data class NoteEntity(
     val updatedDate: Long? = Date().time,
 )
 
-fun NoteEntity.toNote(): Note = Note(
+fun NoteEntity.toData(): Note = Note(
     uid = uid,
     title = title,
     content = content,

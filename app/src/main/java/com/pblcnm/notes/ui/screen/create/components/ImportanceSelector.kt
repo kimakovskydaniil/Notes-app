@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pblcnm.notes.model.Importance
 import com.pblcnm.notes.ui.screen.create.NoteEntity
+import com.pblcnm.notes.ui.theme.neonGreenColor
 
 @Composable
 fun ImportanceSelector(
@@ -21,7 +22,7 @@ fun ImportanceSelector(
 ) {
     Text(
         text = "ВАЖНОСТЬ",
-        color = Color(0xFF00FF9D),
+        color = neonGreenColor,
         fontSize = 14.sp,
         fontWeight = FontWeight.Bold,
     )
@@ -40,7 +41,7 @@ fun ImportanceSelector(
                     )
                 },
                 colors = FilterChipDefaults.filterChipColors(
-                    selectedContainerColor = Color(0xFF00FF9D),
+                    selectedContainerColor = neonGreenColor,
                     selectedLabelColor = Color.Black,
                     containerColor = Color(0xFF2A2A2A),
                     labelColor = Color.White

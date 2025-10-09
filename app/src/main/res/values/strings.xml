@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">RickNotes</string>
+    <string name="notes_title">Заметки</string>
+    <string name="note_edit_title">Редактировать</string>
+    <string name="create_note_title">Создать заметку</string>
 </resources>
