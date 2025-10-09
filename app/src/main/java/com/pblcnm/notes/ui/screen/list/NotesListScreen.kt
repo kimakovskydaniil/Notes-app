@@ -13,9 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
@@ -201,20 +198,25 @@ private fun NotesContent(
     onSwipeDelete: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (notes.isEmpty()) {
-        Box(
-            modifier = modifier
-                .fillMaxSize()
-                .background(Color.Black),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.empty_notes),
-                contentDescription = "Empty list",
-                contentScale = ContentScale.Crop
-            )
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(Color.Black)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.empty_notes),
+            contentDescription = "Empty list",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+        )
 
+        if (notes.isEmpty()) {
             Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -227,20 +229,21 @@ private fun NotesContent(
                     fontSize = 18.sp
                 )
             }
-        }
-    } else {
-        LazyColumn(
-            modifier = modifier,
-            contentPadding = PaddingValues(16.dp)
-        ) {
-            items(items = notes, key = { it.uid }) { note ->
-                SwipeNoteCard(
-                    note = note,
-                    onDelete = { onSwipeDelete(note.uid) },
-                    onClick = { onClickNote(note.uid) },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.height(16.dp))
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.Top
+            ) {
+                items(items = notes, key = { it.uid }) { note ->
+                    SwipeNoteCard(
+                        note = note,
+                        onDelete = { onSwipeDelete(note.uid) },
+                        onClick = { onClickNote(note.uid) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
             }
         }
     }

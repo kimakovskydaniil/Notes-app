@@ -206,7 +206,7 @@ private fun NoteItem(
                         contentDescription = "Delete",
                         tint = Color(0xFFFF6B6B),
                         modifier = Modifier
-                            .size(16.dp)
+                            .size(24.dp)
                             .clickable(onClick = onDelete)
                     )
                 }
