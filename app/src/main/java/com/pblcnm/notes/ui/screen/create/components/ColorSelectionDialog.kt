@@ -1,6 +1,9 @@
 package com.pblcnm.notes.ui.screen.create.components
 
-
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -31,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -40,7 +44,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PortalColorDimensionDialog(
+fun PortalColorPickerDialog(
     startingPortalColor: Color,
     onPortalColorChosen: (Color) -> Unit,
     onClosePortal: () -> Unit,
@@ -102,6 +106,18 @@ private fun ColorPreviewWithBrightness(
     hsv[2] = brightness.coerceIn(0f, 1f)
 
     val adjustedColor = Color(android.graphics.Color.HSVToColor(hsv))
+    val scaleAnim = remember { Animatable(1f) }
+
+    LaunchedEffect(color, brightness) {
+        scaleAnim.animateTo(
+            targetValue = 1.2f,
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioLowBouncy,
+                stiffness = Spring.StiffnessLow
+            )
+        )
+        scaleAnim.animateTo(1f)
+    }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -113,6 +129,7 @@ private fun ColorPreviewWithBrightness(
                 .size(36.dp)
                 .clip(RoundedCornerShape(6.dp))
                 .background(adjustedColor)
+                .scale(scaleAnim.value)
         )
         Spacer(modifier = Modifier.width(10.dp))
         Slider(
@@ -130,6 +147,18 @@ private fun HueGradientSelector(
     onColorSelected: (Color) -> Unit,
 ) {
     var selectorX by remember { mutableFloatStateOf(0f) }
+    val pulseAnim = remember { Animatable(1f) }
+    val selectorScale = remember { Animatable(1f) }
+
+    LaunchedEffect(selectedColor) {
+        pulseAnim.animateTo(1.3f, tween(200))
+        pulseAnim.animateTo(1f, tween(300))
+    }
+
+    LaunchedEffect(selectorX) {
+        selectorScale.animateTo(1.2f, tween(100))
+        selectorScale.animateTo(1f, tween(200))
+    }
 
     BoxWithConstraints(
         modifier = Modifier
@@ -161,27 +190,40 @@ private fun HueGradientSelector(
         GradientCanvas()
 
         Canvas(modifier = Modifier.fillMaxSize()) {
-            val selectorRadius = 12.dp.toPx()
+            val selectorRadius = 12.dp.toPx() * selectorScale.value
             val centerY = size.height / 2f
             val centerX = selectorX
 
             val crossSize = selectorRadius * 0.6f
-            drawLine(
+            val pulseRadius = selectorRadius * pulseAnim.value
+
+            drawCircle(
+                color = Color.White.copy(alpha = 0.3f),
+                radius = pulseRadius,
+                center = Offset(centerX, centerY)
+            )
+
+            drawCircle(
                 color = Color.White,
+                radius = selectorRadius * 0.3f,
+                center = Offset(centerX, centerY)
+            )
+
+            drawLine(
+                color = Color.Black,
                 start = Offset(centerX - crossSize, centerY),
                 end = Offset(centerX + crossSize, centerY),
-                strokeWidth = 3f
+                strokeWidth = 2f
             )
             drawLine(
-                color = Color.White,
+                color = Color.Black,
                 start = Offset(centerX, centerY - crossSize),
                 end = Offset(centerX, centerY + crossSize),
-                strokeWidth = 3f
+                strokeWidth = 2f
             )
         }
     }
 }
-
 
 @Composable
 private fun GradientCanvas() {

@@ -187,7 +187,6 @@ private fun NoteItem(
                     text = note.content,
                     color = Color.White.copy(alpha = 0.9f),
                     style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.fillMaxWidth(),
                     lineHeight = 20.sp
