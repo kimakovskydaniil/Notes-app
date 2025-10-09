@@ -9,7 +9,8 @@ data class Note(
     val title: String,
     val content: String,
     val color: Int = Color.WHITE,
-    val importance: Importance = Importance.NORMAL
+    val importance: Importance = Importance.NORMAL,
+    val destructionDate: Long? = null
 ) {
 
     companion object {
