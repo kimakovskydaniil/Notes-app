@@ -2,7 +2,7 @@ package com.pblcnm.notes.ui.screen.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pblcnm.notes.data.FileRepository
+import com.pblcnm.notes.data.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotesListViewModel @Inject constructor(
-    private val fileRepository: FileRepository
+    private val repository: NoteRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<NotesState>(NotesState.Loading)
@@ -27,8 +27,12 @@ class NotesListViewModel @Inject constructor(
 
     private fun loadNotes() {
         viewModelScope.launch {
+            _state.value = NotesState.Loading
+
             try {
-                _state.value = NotesState.Success(fileRepository.allNotes)
+                repository.notesFlow.collect { notes ->
+                    _state.value = NotesState.Success(notes)
+                }
             } catch (e: Exception) {
                 _state.value = NotesState.Error("Failed to load notes: ${e.message}")
             }
@@ -38,7 +42,7 @@ class NotesListViewModel @Inject constructor(
     private fun deleteNote(noteUid: String) {
         viewModelScope.launch {
             try {
-                fileRepository.deleteNote(noteUid)
+                repository.deleteNote(noteUid)
                 loadNotes()
             } catch (e: Exception) {
                 _state.value = NotesState.Error("Failed to delete note: ${e.message}")

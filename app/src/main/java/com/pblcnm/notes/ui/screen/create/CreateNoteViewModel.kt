@@ -5,14 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pblcnm.notes.data.FileRepository
+import com.pblcnm.notes.data.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateNoteViewModel @Inject constructor(
-    private val fileRepository: FileRepository
+    private val repository: NoteRepository
 ) : ViewModel() {
 
     var state by mutableStateOf(CreateNoteState())
@@ -41,7 +41,7 @@ class CreateNoteViewModel @Inject constructor(
 
     private fun loadNote(uid: String) {
         viewModelScope.launch {
-            val note = fileRepository.getNote(uid)
+            val note = repository.getNoteByUid(uid)
             note?.let {
                 state = state.copy(
                     selectedNote = it.toUi()
@@ -53,7 +53,7 @@ class CreateNoteViewModel @Inject constructor(
     private fun editNote() {
         viewModelScope.launch {
             if (validateNote(state.selectedNote)) {
-                fileRepository.updateNote(
+                repository.updateNote(
                     updatedNote = state.selectedNote.toData()
                 )
             }
@@ -63,7 +63,7 @@ class CreateNoteViewModel @Inject constructor(
     private fun createNote() {
         viewModelScope.launch {
             if (validateNote(state.selectedNote)) {
-                fileRepository.addNote(
+                repository.addNote(
                     note = state.selectedNote.toData()
                 )
             }
