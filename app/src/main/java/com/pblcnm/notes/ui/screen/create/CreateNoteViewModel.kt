@@ -15,7 +15,7 @@ class CreateNoteViewModel @Inject constructor(
     private val fileRepository: FileRepository
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(CreateNoteState())
+    var state by mutableStateOf(CreateNoteState())
         private set
 
     fun processAction(action: CreateNoteAction) {
@@ -29,7 +29,7 @@ class CreateNoteViewModel @Inject constructor(
     }
 
     private fun updateNoteDataState(note: NoteEntity) {
-        uiState = uiState.copy(
+        state = state.copy(
             selectedNote = note,
             isValid = validateNote(note)
         )
@@ -43,7 +43,7 @@ class CreateNoteViewModel @Inject constructor(
         viewModelScope.launch {
             val note = fileRepository.getNote(uid)
             note?.let {
-                uiState = uiState.copy(
+                state = state.copy(
                     selectedNote = it.toUi()
                 )
             }
@@ -52,9 +52,9 @@ class CreateNoteViewModel @Inject constructor(
 
     private fun editNote() {
         viewModelScope.launch {
-            if (validateNote(uiState.selectedNote)) {
+            if (validateNote(state.selectedNote)) {
                 fileRepository.updateNote(
-                    updatedNote = uiState.selectedNote.toData()
+                    updatedNote = state.selectedNote.toData()
                 )
             }
         }
@@ -62,9 +62,9 @@ class CreateNoteViewModel @Inject constructor(
 
     private fun createNote() {
         viewModelScope.launch {
-            if (validateNote(uiState.selectedNote)) {
+            if (validateNote(state.selectedNote)) {
                 fileRepository.addNote(
-                    note = uiState.selectedNote.toData()
+                    note = state.selectedNote.toData()
                 )
             }
         }

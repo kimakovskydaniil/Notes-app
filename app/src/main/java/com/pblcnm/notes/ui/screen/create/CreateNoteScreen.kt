@@ -27,7 +27,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.pblcnm.notes.R
 import com.pblcnm.notes.navigation.components.TopBar
 import com.pblcnm.notes.ui.screen.create.components.NoteForm
-import com.pblcnm.notes.ui.theme.neonGreenColor
 import com.pblcnm.notes.ui.theme.rickColor
 
 @Composable
@@ -78,7 +77,7 @@ fun CreateNoteScreen(
                 verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
                 NoteForm(
-                    noteData = viewModel.uiState.selectedNote,
+                    noteData = viewModel.state.selectedNote,
                     onNoteDataChange = {
                         viewModel.processAction(
                             CreateNoteAction.ModifyNoteData(note = it)
@@ -92,7 +91,7 @@ fun CreateNoteScreen(
                         viewModel.processAction(CreateNoteAction.CreateNote(noteUid))
                         onBack()
                     },
-                    enabled = viewModel.uiState.isValid,
+                    enabled = viewModel.state.isValid,
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = rickColor,

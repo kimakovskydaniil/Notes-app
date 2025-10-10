@@ -41,6 +41,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.pblcnm.notes.R
 import com.pblcnm.notes.model.Note
 import com.pblcnm.notes.navigation.components.TopBar
+import com.pblcnm.notes.ui.screen.create.toUi
 import com.pblcnm.notes.ui.screen.list.components.SwipeNoteCard
 import com.pblcnm.notes.ui.theme.neonGreenColor
 
@@ -237,7 +238,7 @@ private fun NotesContent(
             ) {
                 items(items = notes, key = { it.uid }) { note ->
                     SwipeNoteCard(
-                        note = note,
+                        note = note.toUi(),
                         onDelete = { onSwipeDelete(note.uid) },
                         onClick = { onClickNote(note.uid) },
                         modifier = Modifier.fillMaxWidth()

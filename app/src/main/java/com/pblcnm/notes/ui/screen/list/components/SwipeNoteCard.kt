@@ -39,12 +39,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pblcnm.notes.model.Importance
-import com.pblcnm.notes.model.Note
+import com.pblcnm.notes.ui.screen.create.NoteEntity
 import com.pblcnm.notes.ui.theme.neonGreenColor
 
 @Composable
 fun SwipeNoteCard(
-    note: Note,
+    note: NoteEntity,
     onDelete: () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -92,7 +92,7 @@ fun SwipeNoteCard(
 
 @Composable
 private fun NoteItem(
-    note: Note,
+    note: NoteEntity,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
